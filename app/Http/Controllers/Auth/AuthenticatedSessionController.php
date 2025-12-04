@@ -12,11 +12,19 @@ use Illuminate\View\View;
 class AuthenticatedSessionController extends Controller
 {
     /**
-     * Display the login view.
+     * Display the admin login view.
      */
-    public function create(): View
+    public function createAdmin(): View
     {
-        return view('auth.login');
+        return view('auth.login', ['isAdmin' => true]);
+    }
+
+    /**
+     * Display the customer login view.
+     */
+    public function createCustomer(): View
+    {
+        return view('auth.login', ['isAdmin' => false]);
     }
 
     /**
@@ -28,7 +36,13 @@ class AuthenticatedSessionController extends Controller
 
         $request->session()->regenerate();
 
-        return redirect()->intended(route('dashboard', absolute: false));
+        // Redirect based on user role
+        $user = Auth::user();
+        if ($user->isAdmin()) {
+            return redirect()->intended(route('admin.dashboard'));
+        }
+
+        return redirect()->intended(route('customer.dashboard'));
     }
 
     /**

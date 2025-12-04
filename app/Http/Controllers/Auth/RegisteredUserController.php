@@ -15,19 +15,25 @@ use Illuminate\View\View;
 class RegisteredUserController extends Controller
 {
     /**
-     * Display the registration view.
+     * Display the admin registration view.
      */
-    public function create(): View
+    public function createAdmin(): View
     {
-        return view('auth.register');
+        return view('auth.register', ['isAdmin' => true]);
     }
 
     /**
-     * Handle an incoming registration request.
-     *
-     * @throws \Illuminate\Validation\ValidationException
+     * Display the customer registration view.
      */
-    public function store(Request $request): RedirectResponse
+    public function createCustomer(): View
+    {
+        return view('auth.register', ['isAdmin' => false]);
+    }
+
+    /**
+     * Handle an incoming admin registration request.
+     */
+    public function storeAdmin(Request $request): RedirectResponse
     {
         $request->validate([
             'name' => ['required', 'string', 'max:255'],
@@ -39,12 +45,38 @@ class RegisteredUserController extends Controller
             'name' => $request->name,
             'email' => $request->email,
             'password' => Hash::make($request->password),
+            'role' => 'admin',
         ]);
 
         event(new Registered($user));
 
         Auth::login($user);
 
-        return redirect(route('dashboard', absolute: false));
+        return redirect()->route('admin.dashboard');
+    }
+
+    /**
+     * Handle an incoming customer registration request.
+     */
+    public function storeCustomer(Request $request): RedirectResponse
+    {
+        $request->validate([
+            'name' => ['required', 'string', 'max:255'],
+            'email' => ['required', 'string', 'lowercase', 'email', 'max:255', 'unique:'.User::class],
+            'password' => ['required', 'confirmed', Rules\Password::defaults()],
+        ]);
+
+        $user = User::create([
+            'name' => $request->name,
+            'email' => $request->email,
+            'password' => Hash::make($request->password),
+            'role' => 'customer',
+        ]);
+
+        event(new Registered($user));
+
+        Auth::login($user);
+
+        return redirect()->route('customer.dashboard');
     }
 }

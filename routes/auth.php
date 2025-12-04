@@ -12,14 +12,31 @@ use App\Http\Controllers\Auth\VerifyEmailController;
 use Illuminate\Support\Facades\Route;
 
 Route::middleware('guest')->group(function () {
-    Route::get('register', [RegisteredUserController::class, 'create'])
+    // Admin routes
+    Route::get('admin/register', [RegisteredUserController::class, 'createAdmin'])
+        ->name('admin.register');
+    Route::post('admin/register', [RegisteredUserController::class, 'storeAdmin']);
+
+    Route::get('admin/login', [AuthenticatedSessionController::class, 'createAdmin'])
+        ->name('admin.login');
+    Route::post('admin/login', [AuthenticatedSessionController::class, 'store']);
+
+    // Customer routes
+    Route::get('customer/register', [RegisteredUserController::class, 'createCustomer'])
+        ->name('customer.register');
+    Route::post('customer/register', [RegisteredUserController::class, 'storeCustomer']);
+
+    Route::get('customer/login', [AuthenticatedSessionController::class, 'createCustomer'])
+        ->name('customer.login');
+    Route::post('customer/login', [AuthenticatedSessionController::class, 'store']);
+
+    // Legacy routes (redirect to customer)
+    Route::get('register', [RegisteredUserController::class, 'createCustomer'])
         ->name('register');
+    Route::post('register', [RegisteredUserController::class, 'storeCustomer']);
 
-    Route::post('register', [RegisteredUserController::class, 'store']);
-
-    Route::get('login', [AuthenticatedSessionController::class, 'create'])
+    Route::get('login', [AuthenticatedSessionController::class, 'createCustomer'])
         ->name('login');
-
     Route::post('login', [AuthenticatedSessionController::class, 'store']);
 
     Route::get('forgot-password', [PasswordResetLinkController::class, 'create'])

@@ -23,6 +23,8 @@ class DatabaseSeeder extends Seeder
 
         // Pet Hotel seeders
         $this->call([
+            \Database\Seeders\AdminSeeder::class,
+            \Database\Seeders\CustomerSeeder::class,
             \Database\Seeders\OwnersSeeder::class,
             \Database\Seeders\PetsSeeder::class,
             \Database\Seeders\RoomsSeeder::class,
