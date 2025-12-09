@@ -49,9 +49,12 @@
                     <div class="flex items-center gap-4">
                         <textarea name="message" 
                                   rows="2" 
-                                  class="w-full rounded-md shadow-sm focus:border-pink-500 focus:ring-pink-500 @error('message') border-red-500 @else border-gray-300 @enderror" 
+                                  @class([
+                                      'form-input w-full',
+                                      'border-red-500' => $errors->has('message'),
+                                  ]) 
                                   placeholder="{{ __('messages.type_message_placeholder') }}"></textarea>
-                        <button type="submit" class="inline-flex items-center px-4 py-2 bg-[#FFB6C9] border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-pink-500 focus:bg-pink-500 active:bg-pink-700 focus:outline-none focus:ring-2 focus:ring-pink-500 focus:ring-offset-2 transition ease-in-out duration-150">
+                        <button type="submit" class="btn-gradient inline-flex items-center justify-center w-24 h-12 rounded-md font-semibold text-xs uppercase tracking-widest transition">
                             {{ __('messages.send') }}
                         </button>
                     </div>
