@@ -1,10 +1,9 @@
 <x-app-layout>
     <x-slot name="header"><h2 class="font-semibold text-xl text-gray-800 leading-tight">{{ __('messages.available_rooms') }}</h2></x-slot>
-    <div class="py-12">
-        <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
-            <div class="mb-6">
-                <h3 class="text-2xl font-bold text-gray-900">{{ __('messages.book_room_for_pet') }}</h3>
-                <p class="text-gray-600 mt-2">{{ __('messages.choose_from_available') }}</p>
+    <div class="space-y-6">
+            <div>
+                <h1 class="text-3xl font-bold text-gray-900">{{ __('messages.book_room_for_pet') }}</h1>
+                <p class="text-gray-600 mt-1">{{ __('messages.choose_from_available') }}</p>
             </div>
 
             <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
@@ -37,6 +36,5 @@
                 </div>
                 @endforelse
             </div>
-        </div>
     </div>
 </x-app-layout>

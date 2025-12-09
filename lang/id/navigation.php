@@ -15,4 +15,9 @@ return [
     'my_pets' => 'Peliharaan Saya',
     'my_bookings' => 'Booking Saya',
     'notifications' => 'Notifikasi',
+    'notifications_description' => 'Lihat semua notifikasi Anda di sini.',
+    'all_notifications' => 'Semua Notifikasi',
+    'mark_all_read' => 'Tandai semua telah dibaca',
+    'mark_as_read' => 'Tandai telah dibaca',
+    'no_notifications' => 'Belum ada notifikasi.',
 ];

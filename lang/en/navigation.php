@@ -15,4 +15,9 @@ return [
     'my_pets' => 'My Pets',
     'my_bookings' => 'My Bookings',
     'notifications' => 'Notifications',
+    'notifications_description' => 'View all your notifications here.',
+    'all_notifications' => 'All Notifications',
+    'mark_all_read' => 'Mark all as read',
+    'mark_as_read' => 'Mark as read',
+    'no_notifications' => 'No notifications yet.',
 ];

@@ -127,8 +127,8 @@ class MessageController extends Controller
         \App\Models\Notification::create([
             'user_id' => $customer->id,
             'type' => 'new_message',
-            'title' => 'New Message from Admin',
-            'message' => 'You have a new message from ' . $user->name,
+            'title' => 'messages.notifications.new_message_from_admin.title',
+            'message' => 'messages.notifications.new_message_from_admin.message',
             'data' => json_encode([
                 'message_id' => $message->id,
                 'sender_name' => $user->name,

@@ -41,12 +41,16 @@
                                 <td class="border-dashed border-t border-gray-200 px-6 py-3"><span class="text-gray-700">{{ $booking->start_date }}</span></td>
                                 <td class="border-dashed border-t border-gray-200 px-6 py-3"><span class="text-gray-700">{{ $booking->end_date }}</span></td>
                                 <td class="border-dashed border-t border-gray-200 px-6 py-3">
-                                    <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full 
-                                        {{ $booking->status == 'confirmed' ? 'bg-green-100 text-green-800' : '' }}
-                                        {{ $booking->status == 'pending' ? 'bg-yellow-100 text-yellow-800' : '' }}
-                                        {{ $booking->status == 'cancelled' ? 'bg-red-100 text-red-800' : '' }}">
-                                        {{ __('messages.' . $booking->status) }}
-                                    </span>
+                                    <form action="{{ route('bookings.updateStatus', $booking) }}" method="POST" class="update-status-form">
+                                        @csrf
+                                        @method('PATCH')
+                                        <select name="status" class="w-full rounded-md border-gray-300 shadow-sm focus:border-pink-500 focus:ring-pink-500 text-xs" onchange="this.form.submit()">
+                                            <option value="reserved" {{ $booking->status == 'reserved' ? 'selected' : '' }}>{{ __('messages.reserved') }}</option>
+                                            <option value="confirmed" {{ $booking->status == 'confirmed' ? 'selected' : '' }}>{{ __('messages.confirmed') }}</option>
+                                            <option value="pending" {{ $booking->status == 'pending' ? 'selected' : '' }}>{{ __('messages.pending') }}</option>
+                                            <option value="cancelled" {{ $booking->status == 'cancelled' ? 'selected' : '' }}>{{ __('messages.cancelled') }}</option>
+                                        </select>
+                                    </form>
                                 </td>
                                 <td class="border-dashed border-t border-gray-200 px-6 py-3">
                                     <a href="{{ route('bookings.edit', $booking) }}" class="text-indigo-600 hover:text-indigo-900">{{ __('messages.edit') }}</a>

@@ -55,6 +55,7 @@ return [
     'flash_error' => 'Terjadi Kesalahan!',
     'booking_created' => 'Booking berhasil dibuat! Mohon tunggu konfirmasi.',
     'booking_updated' => 'Booking berhasil diperbarui!',
+    'booking_status_updated' => 'Status booking berhasil diperbarui!',
     'booking_deleted' => 'Booking berhasil dihapus!',
     'profile_updated' => 'Profil berhasil diperbarui!',
     'pet_added' => 'Hewan peliharaan berhasil ditambahkan!',
@@ -136,6 +137,7 @@ return [
     'pet_name' => 'Nama Peliharaan',
     'age_years' => 'Usia (tahun)',
     'notes' => 'Catatan',
+    'pet_image' => 'Gambar Peliharaan',
     'create_pet' => 'Buat Peliharaan',
     'update_pet' => 'Perbarui Peliharaan',
 
@@ -160,6 +162,7 @@ return [
     'deluxe' => 'Deluxe',
     'suite' => 'Suite',
     'rate_per_day' => 'Tarif Per Hari',
+    'room_image' => 'Gambar Kamar',
     'create_room' => 'Buat Kamar',
     'update_room' => 'Perbarui Kamar',
     'available' => 'Tersedia',
@@ -233,6 +236,7 @@ return [
     'no_conversations_found' => 'Tidak ada percakapan yang ditemukan.',
     'last_message_on' => 'Pesan terakhir pada',
     'chat_with' => 'Obrolan dengan',
+    'chat_with_admin' => 'Mengobrol langsung dengan administrator Pet Hotel.',
     'no_messages_yet' => 'Belum ada pesan dalam percakapan ini.',
     'start_conversation' => 'Mulai percakapan dengan mengirim pesan.',
     'type_message_placeholder' => 'Ketik pesan Anda di sini...',
@@ -256,6 +260,7 @@ return [
     'profile_image' => 'Gambar Profil',
     'email_cannot_be_changed' => 'Email tidak dapat diubah.',
     'update_profile' => 'Perbarui Profil',
+    'change_photo' => 'Ubah Foto',
     'contact_admin_add_pet' => 'Hubungi admin untuk menambahkan hewan peliharaan Anda.',
     'view_all_bookings' => 'Lihat Semua Pemesanan',
     'no_bookings_yet_customer' => 'Belum Ada Pemesanan',
@@ -313,4 +318,30 @@ return [
     'check_out_date' => 'Tanggal Check-out',
     'back' => 'Kembali',
     'confirm_booking' => 'Konfirmasi Pemesanan',
+
+    // Customer Invoice Detail
+    'invoice_details' => 'Detail Faktur',
+    'pet_name' => 'Nama Hewan',
+    'room_type' => 'Tipe Kamar',
+    'duration' => 'Durasi',
+    'days' => 'hari',
+    'payment_received_on' => 'Pembayaran diterima pada',
+    'payment_pending' => 'Pembayaran tertunda. Silakan hubungi admin untuk instruksi pembayaran.',
+
+    // Number Formatting
+    'thousand' => 'Ribu',
+    'million' => 'Juta',
+    'billion' => 'Miliar',
+
+    // Notifications
+    'notifications' => [
+        'payment_confirmed' => [
+            'title' => 'Pembayaran Dikonfirmasi',
+            'message' => 'Pembayaran Anda untuk Faktur #:invoice_id telah dikonfirmasi. Terima kasih!',
+        ],
+        'new_message_from_admin' => [
+            'title' => 'Pesan Baru dari Admin',
+            'message' => 'Anda memiliki pesan baru dari Admin Pet Hotel.',
+        ],
+    ],
 ];

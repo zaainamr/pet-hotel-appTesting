@@ -50,8 +50,9 @@ class InvoiceController extends Controller
                 \App\Models\Notification::create([
                     'user_id' => $customerUser->id,
                     'type' => 'payment_received',
-                    'title' => 'Payment Confirmed',
-                    'message' => 'Your payment for Invoice #' . $invoice->id . ' has been confirmed. Thank you!',
+                    'title' => 'messages.notifications.payment_confirmed.title',
+                    'message' => 'messages.notifications.payment_confirmed.message',
+
                     'data' => json_encode([
                         'invoice_id' => $invoice->id,
                         'amount' => $invoice->amount,

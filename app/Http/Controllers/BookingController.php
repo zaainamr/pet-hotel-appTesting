@@ -148,6 +148,17 @@ class BookingController extends Controller
 
     }
 
+    public function updateStatus(Request $request, Booking $booking)
+    {
+        $request->validate(['status' => 'required|in:reserved,confirmed,pending,cancelled']);
+
+        $booking->update(['status' => $request->status]);
+
+        // Optional: Add notifications or other logic here as needed
+
+        return back()->with('success', __('messages.booking_status_updated'));
+    }
+
     public function destroy(Booking $booking)
     {
         // Free up room if assigned

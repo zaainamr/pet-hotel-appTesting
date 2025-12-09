@@ -1,6 +1,5 @@
 <x-app-layout>
-    <div class="py-8">
-        <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
+    <div class="space-y-6">
             <!-- Hero Welcome Card with Illustration -->
             <div class="relative overflow-hidden bg-gradient-to-br from-pink-500 via-purple-500 to-indigo-600 rounded-3xl shadow-2xl mb-8 transform hover:scale-[1.02] transition-all duration-300">
                 <div class="absolute inset-0 bg-black opacity-10"></div>
@@ -245,6 +244,5 @@
                 </div>
             </div>
             @endif
-        </div>
     </div>
 </x-app-layout>

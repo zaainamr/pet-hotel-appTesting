@@ -63,6 +63,7 @@ Route::middleware(['auth', 'admin'])->group(function () {
     Route::resource('rooms', RoomController::class);
     Route::resource('services', ServiceController::class)->except(['create','edit']);
     Route::resource('bookings', BookingController::class);
+    Route::patch('bookings/{booking}/status', [BookingController::class, 'updateStatus'])->name('bookings.updateStatus');
     Route::resource('invoices', InvoiceController::class)->only(['index','show','update']);
 
     // Reports (Admin only)

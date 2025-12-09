@@ -55,6 +55,7 @@ return [
     'flash_error' => 'An Error Occurred!',
     'booking_created' => 'Booking created successfully! Please wait for confirmation.',
     'booking_updated' => 'Booking updated successfully!',
+    'booking_status_updated' => 'Booking status updated successfully!',
     'booking_deleted' => 'Booking deleted successfully!',
     'profile_updated' => 'Profile updated successfully!',
     'pet_added' => 'Pet added successfully!',
@@ -136,6 +137,7 @@ return [
     'pet_name' => 'Pet Name',
     'age_years' => 'Age (years)',
     'notes' => 'Notes',
+    'pet_image' => 'Pet Image',
     'create_pet' => 'Create Pet',
     'update_pet' => 'Update Pet',
 
@@ -160,6 +162,7 @@ return [
     'deluxe' => 'Deluxe',
     'suite' => 'Suite',
     'rate_per_day' => 'Rate Per Day',
+    'room_image' => 'Room Image',
     'create_room' => 'Create Room',
     'update_room' => 'Update Room',
     'available' => 'Available',
@@ -233,6 +236,8 @@ return [
     'no_conversations_found' => 'No conversations found.',
     'last_message_on' => 'Last message on',
     'chat_with' => 'Chat with',
+    'chat_with_admin' => 'Chat directly with the Pet Hotel administrator',
+    'chat_with_admin' => 'Chat directly with the Pet Hotel administrator.',
     'no_messages_yet' => 'No messages in this conversation yet.',
     'start_conversation' => 'Start the conversation by sending a message.',
     'type_message_placeholder' => 'Type your message here...',
@@ -256,6 +261,7 @@ return [
     'profile_image' => 'Profile Image',
     'email_cannot_be_changed' => 'Email cannot be changed.',
     'update_profile' => 'Update Profile',
+    'change_photo' => 'Change Photo',
     'contact_admin_add_pet' => 'Contact admin to add your pets.',
     'view_all_bookings' => 'View All Bookings',
     'no_bookings_yet_customer' => 'No Bookings Yet',
@@ -313,4 +319,30 @@ return [
     'check_out_date' => 'Check-out Date',
     'back' => 'Back',
     'confirm_booking' => 'Confirm Booking',
+
+    // Customer Invoice Detail
+    'invoice_details' => 'Invoice Details',
+    'pet_name' => 'Pet Name',
+    'room_type' => 'Room Type',
+    'duration' => 'Duration',
+    'days' => 'days',
+    'payment_received_on' => 'Payment received on',
+    'payment_pending' => 'Payment pending. Please contact admin for payment instructions.',
+
+    // Number Formatting
+    'thousand' => 'K',
+    'million' => 'M',
+    'billion' => 'B',
+
+    // Notifications
+    'notifications' => [
+        'payment_confirmed' => [
+            'title' => 'Payment Confirmed',
+            'message' => 'Your payment for Invoice #:invoice_id has been confirmed. Thank you!',
+        ],
+        'new_message_from_admin' => [
+            'title' => 'New Message from Admin',
+            'message' => 'You have a new message from Admin Pet Hotel.',
+        ],
+    ],
 ];

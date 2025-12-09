@@ -66,7 +66,7 @@
                             </svg>
                         </div>
                         <p class="text-sm text-gray-600 mb-1">{{ __('messages.monthly_revenue') }}</p>
-                        <p class="text-3xl font-bold text-gray-900">Rp{{ number_format($monthlyRevenue, 0, ',', '.') }}</p>
+                        <p class="text-3xl font-bold text-gray-900">Rp{{ format_large_number($monthlyRevenue) }}</p>
                     </div>
                     <span class="text-sm font-semibold text-green-600">+24%</span>
                 </div>
@@ -142,7 +142,7 @@
                                     {{ ucfirst($booking->status) }}
                                 </span>
                             </td>
-                            <td class="px-6 py-4 text-sm font-semibold text-gray-900">Rp{{ number_format($booking->total_price, 0, ',', '.') }}</td>
+                            <td class="px-6 py-4 text-sm font-semibold text-gray-900">Rp{{ format_large_number($booking->total_price) }}</td>
                         </tr>
                         @empty
                         <tr>
