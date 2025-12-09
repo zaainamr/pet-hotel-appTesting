@@ -161,6 +161,8 @@ return [
     'standard' => 'Standard',
     'deluxe' => 'Deluxe',
     'suite' => 'Suite',
+    'family' => 'Family',
+    'vip' => 'VIP',
     'rate_per_day' => 'Rate Per Day',
     'room_image' => 'Room Image',
     'create_room' => 'Create Room',

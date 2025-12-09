@@ -161,6 +161,8 @@ return [
     'standard' => 'Standar',
     'deluxe' => 'Deluxe',
     'suite' => 'Suite',
+    'family' => 'Keluarga',
+    'vip' => 'VIP',
     'rate_per_day' => 'Tarif Per Hari',
     'room_image' => 'Gambar Kamar',
     'create_room' => 'Buat Kamar',
