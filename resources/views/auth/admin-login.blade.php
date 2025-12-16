@@ -54,11 +54,6 @@
                         <label for="remember-me" class="ml-2 block text-sm text-gray-700">{{ __('messages.form_remember_me') }}</label>
                     </div>
 
-                    @if (Route::has('password.request'))
-                        <div class="text-sm">
-                            <a href="{{ route('password.request') }}" class="text-link">{{ __('messages.form_forgot_password') }}</a>
-                        </div>
-                    @endif
                 </div>
 
                 <div>
