@@ -29,7 +29,7 @@
                 </p>
 
                 <!-- Form -->
-                <form method="POST" action="{{ $isAdmin ? route('admin.register') : route('customer.register') }}">
+                <form method="POST" action="{{ $isAdmin ? route('admin.register') : route('customer.register') }}" autocomplete="off">
                     @csrf
 
                     <!-- Name -->
@@ -46,10 +46,9 @@
                             <input id="name" 
                                    type="text" 
                                    name="name" 
-                                   value="{{ old('name') }}" 
                                    required 
                                    autofocus 
-                                   autocomplete="name"
+                                   autocomplete="nope"
                                    placeholder="{{ __('messages.form_full_name_placeholder') }}"
                                    class="form-input-icon">
                         </div>
@@ -70,9 +69,8 @@
                             <input id="email" 
                                    type="email" 
                                    name="email" 
-                                   value="{{ old('email') }}" 
                                    required 
-                                   autocomplete="username"
+                                   autocomplete="nope"
                                    placeholder="{{ __('messages.form_email_placeholder') }}"
                                    class="form-input-icon">
                         </div>
@@ -96,7 +94,11 @@
                                    required 
                                    autocomplete="new-password"
                                    placeholder="{{ __('messages.form_password_placeholder') }}"
-                                   class="form-input-icon">
+                                   class="form-input-icon pr-12">
+                            <button type="button" id="togglePassword" class="absolute inset-y-0 right-0 px-4 flex items-center text-gray-400 hover:text-gray-600">
+                                <svg id="eyeIcon" class="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"/></svg>
+                                <svg id="eyeOffIcon" class="h-5 w-5 hidden" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13.875 18.825A10.05 10.05 0 0112 19c-4.478 0-8.268-2.943-9.542-7 1.274-4.057 5.064-7 9.542-7 .847 0 1.67.111 2.458.315M15 12a3 3 0 11-6 0 3 3 0 016 0zm6 3l-2.647-2.646M3 3l18 18"/></svg>
+                            </button>
                         </div>
                         <x-input-error :messages="$errors->get('password')" class="mt-2" />
                     </div>
@@ -118,7 +120,11 @@
                                    required 
                                    autocomplete="new-password"
                                    placeholder="{{ __('messages.form_password_placeholder') }}"
-                                   class="form-input-icon">
+                                   class="form-input-icon pr-12">
+                            <button type="button" id="togglePasswordConfirmation" class="absolute inset-y-0 right-0 px-4 flex items-center text-gray-400 hover:text-gray-600">
+                                <svg id="eyeIconConfirmation" class="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"/></svg>
+                                <svg id="eyeOffIconConfirmation" class="h-5 w-5 hidden" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13.875 18.825A10.05 10.05 0 0112 19c-4.478 0-8.268-2.943-9.542-7 1.274-4.057 5.064-7 9.542-7 .847 0 1.67.111 2.458.315M15 12a3 3 0 11-6 0 3 3 0 016 0zm6 3l-2.647-2.646M3 3l18 18"/></svg>
+                            </button>
                         </div>
                         <x-input-error :messages="$errors->get('password_confirmation')" class="mt-2" />
                     </div>
@@ -146,4 +152,33 @@
             <img src="{{ asset('image/bg-regist.svg') }}" alt="Register background" class="absolute inset-0 w-full h-full object-cover object-right rounded-l-4xl">
         </div>
     </div>
+@push('scripts')
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        function setupPasswordToggle(toggleBtnId, passwordInputId, eyeIconId, eyeOffIconId) {
+            const toggleBtn = document.getElementById(toggleBtnId);
+            const passwordInput = document.getElementById(passwordInputId);
+            const eyeIcon = document.getElementById(eyeIconId);
+            const eyeOffIcon = document.getElementById(eyeOffIconId);
+
+            if (toggleBtn && passwordInput) {
+                toggleBtn.addEventListener('click', function () {
+                    if (passwordInput.type === 'password') {
+                        passwordInput.type = 'text';
+                        eyeIcon.classList.add('hidden');
+                        eyeOffIcon.classList.remove('hidden');
+                    } else {
+                        passwordInput.type = 'password';
+                        eyeIcon.classList.remove('hidden');
+                        eyeOffIcon.classList.add('hidden');
+                    }
+                });
+            }
+        }
+
+        setupPasswordToggle('togglePassword', 'password', 'eyeIcon', 'eyeOffIcon');
+        setupPasswordToggle('togglePasswordConfirmation', 'password_confirmation', 'eyeIconConfirmation', 'eyeOffIconConfirmation');
+    });
+</script>
+@endpush
 </x-auth-layout>

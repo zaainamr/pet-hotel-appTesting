@@ -37,7 +37,7 @@
                 <x-auth-session-status class="mb-4" :status="session('status')" />
 
                 <!-- Form -->
-                <form method="POST" action="{{ $isAdmin ? route('admin.login') : route('customer.login') }}">
+                <form method="POST" action="{{ $isAdmin ? route('admin.login') : route('customer.login') }}" autocomplete="off">
                     @csrf
 
                     <!-- Email Address -->
@@ -54,10 +54,9 @@
                             <input id="email" 
                                    type="email" 
                                    name="email" 
-                                   value="{{ old('email') }}" 
                                    required 
                                    autofocus 
-                                   autocomplete="username"
+                                   autocomplete="nope"
                                    placeholder="{{ __('messages.form_email_placeholder') }}"
                                    class="form-input-icon">
                         </div>
@@ -79,9 +78,20 @@
                                    type="password" 
                                    name="password" 
                                    required 
-                                   autocomplete="current-password"
+                                   autocomplete="new-password"
                                    placeholder="{{ __('messages.form_password_placeholder') }}"
                                    class="form-input-icon">
+                            <div class="absolute inset-y-0 right-0 pr-4 flex items-center">
+                                <button type="button" id="togglePassword" class="text-gray-400 hover:text-gray-600">
+                                    <svg id="eyeIcon" xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" />
+                                    </svg>
+                                    <svg id="eyeOffIcon" xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 hidden" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13.875 18.825A10.05 10.05 0 0112 19c-4.478 0-8.268-2.943-9.542-7 1.274-4.057 5.064-7 9.542-7 .847 0 1.67.127 2.454.364M18.408 15.851A9.942 9.942 0 0112 13.5a9.942 9.942 0 01-6.408-2.351M12 9.5a2.5 2.5 0 00-2.5 2.5M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
+                                    </svg>
+                                </button>
+                            </div>
                         </div>
                         <x-input-error :messages="$errors->get('password')" class="mt-2" />
                     </div>
@@ -123,4 +133,23 @@
             </div>
         </div>
     </div>
+@push('scripts')
+<script>
+    document.getElementById('togglePassword').addEventListener('click', function () {
+        const passwordInput = document.getElementById('password');
+        const eyeIcon = document.getElementById('eyeIcon');
+        const eyeOffIcon = document.getElementById('eyeOffIcon');
+
+        if (passwordInput.type === 'password') {
+            passwordInput.type = 'text';
+            eyeIcon.classList.add('hidden');
+            eyeOffIcon.classList.remove('hidden');
+        } else {
+            passwordInput.type = 'password';
+            eyeIcon.classList.remove('hidden');
+            eyeOffIcon.classList.add('hidden');
+        }
+    });
+</script>
+@endpush
 </x-auth-layout>

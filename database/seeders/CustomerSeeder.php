@@ -10,19 +10,23 @@ class CustomerSeeder extends Seeder
 {
     public function run(): void
     {
-        $user = User::create([
-            'name' => 'Customer Pet Hotel',
+        // Create a specific customer for easy testing
+        $specificUser = User::factory()->create([
+            'name' => 'John Doe',
             'email' => 'customer@pethotel.com',
-            'password' => bcrypt('password'),
             'role' => 'customer',
-            'email_verified_at' => now(),
+        ]);
+        Owner::factory()->create([
+            'name' => $specificUser->name,
+            'email' => $specificUser->email,
         ]);
 
-        Owner::create([
-            'name' => $user->name,
-            'email' => $user->email,
-            'phone' => '081234567890',
-            'address' => 'Jl. Customer No. 123, Jakarta',
-        ]);
+        // Create 10 random customers and their corresponding owner profiles
+        User::factory(10)->create(['role' => 'customer'])->each(function ($user) {
+            Owner::factory()->create([
+                'name' => $user->name,
+                'email' => $user->email,
+            ]);
+        });
     }
 }

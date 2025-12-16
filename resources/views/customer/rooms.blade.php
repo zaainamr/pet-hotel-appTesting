@@ -8,8 +8,15 @@
 
             <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
                 @forelse($rooms as $room)
-                <div class="bg-white rounded-lg shadow-lg overflow-hidden hover:shadow-xl transition">
-                    <img src="{{ str_starts_with($room->image, 'images/rooms') ? asset('storage/' . $room->image) : asset('image/' . basename($room->image)) }}" alt="{{ $room->code }}" class="w-full object-cover aspect-[4/3]">
+                <div class="relative bg-white rounded-lg shadow-lg overflow-hidden transition @if($room->status !== 'available') bg-gray-200 @else hover:shadow-xl @endif">
+                    <div class="relative">
+                        <img src="{{ str_starts_with($room->image, 'images/rooms') ? asset('storage/' . $room->image) : asset('image/' . basename($room->image)) }}" alt="{{ $room->code }}" class="w-full object-cover aspect-[4/3] @if($room->status !== 'available') opacity-50 @endif">
+                        @if($room->status !== 'available')
+                            <div class="absolute top-2 right-2 bg-gray-800 bg-opacity-70 text-white text-xs font-bold px-3 py-1 rounded-full uppercase">
+                                {{ __('messages.' . $room->status) }}
+                            </div>
+                        @endif
+                    </div>
                     <div class="p-6">
                         <h4 class="text-xl font-bold text-gray-900 mb-2">{{ __('messages.room') }} {{ $room->code }}</h4>
                         <p class="text-gray-600 mb-4">{{ $room->type ? __('messages.' . strtolower($room->type)) : __('messages.standard') }}</p>
@@ -25,9 +32,15 @@
                             </div>
                         </div>
 
-                        <a href="{{ route('customer.book', $room) }}" class="btn-gradient block w-full text-center">
-                            {{ __('messages.book_now') }}
-                        </a>
+                        @if($room->status === 'available')
+                            <a href="{{ route('customer.book', $room) }}" class="btn-gradient block w-full text-center">
+                                {{ __('messages.book_now') }}
+                            </a>
+                        @else
+                            <div class="bg-gray-300 text-gray-500 font-bold py-2 px-4 rounded-lg text-center cursor-not-allowed">
+                                {{ __('messages.' . $room->status) }}
+                            </div>
+                        @endif
                     </div>
                 </div>
                 @empty

@@ -68,5 +68,6 @@
     </head>
     <body class="antialiased">
         {{ $slot }}
+        @stack('scripts')
     </body>
 </html>

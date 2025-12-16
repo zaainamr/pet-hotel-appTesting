@@ -10,11 +10,16 @@ class PetsSeeder extends Seeder
 {
     public function run()
     {
-        $owners = Owner::all();
-        if ($owners->isEmpty()) return;
+        $owners = \App\Models\Owner::all();
 
-        Pet::create(['owner_id' => $owners->first()->id, 'name' => 'Kiko', 'species' => 'Dog', 'breed' => 'Beagle', 'age' => 3]);
-        Pet::create(['owner_id' => $owners->skip(1)->first()->id ?? $owners->first()->id, 'name' => 'Mimi', 'species' => 'Cat', 'breed' => 'Siamese', 'age' => 2]);
-        Pet::create(['owner_id' => $owners->last()->id, 'name' => 'Rex', 'species' => 'Dog', 'breed' => 'Labrador', 'age' => 5]);
+        if ($owners->isEmpty()) {
+            return; // No owners to assign pets to
+        }
+
+        // Create 25 pets and assign them to random existing owners
+        \App\Models\Pet::factory(25)->make()->each(function ($pet) use ($owners) {
+            $pet->owner_id = $owners->random()->id;
+            $pet->save();
+        });
     }
 }

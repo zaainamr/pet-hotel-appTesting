@@ -15,21 +15,14 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
-        // User::factory(10)->create();
-        User::factory()->create([
-            'name' => 'Test User',
-            'email' => 'test@example.com',
-        ]);
-
-        // Pet Hotel seeders
         $this->call([
-            \Database\Seeders\AdminSeeder::class,
-            \Database\Seeders\CustomerSeeder::class,
-            \Database\Seeders\OwnersSeeder::class,
-            \Database\Seeders\PetsSeeder::class,
-            \Database\Seeders\RoomsSeeder::class,
-            \Database\Seeders\ServicesSeeder::class,
-            \Database\Seeders\BookingsSeeder::class,
+            AdminSeeder::class,
+            CustomerSeeder::class, // Creates Users with role 'customer' and corresponding Owners
+            OwnersSeeder::class,   // Creates additional Owners without user accounts
+            PetsSeeder::class,     // Assigns Pets to the Owners created above
+            RoomsSeeder::class,
+            ServicesSeeder::class,
+            BookingsSeeder::class, // Creates Bookings and corresponding Invoices
         ]);
     }
 }
