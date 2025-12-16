@@ -71,6 +71,8 @@ return [
     'room_created' => 'Room created successfully!',
     'room_updated' => 'Room updated successfully!',
     'room_deleted' => 'Room deleted successfully!',
+    'room_delete_has_booking' => 'Cannot delete a room that is occupied or full.',
+    'room_edit_has_booking' => 'Cannot edit a room that is occupied or full.',
     'service_created' => 'Service created successfully!',
 
     // Admin Dashboard
@@ -170,6 +172,7 @@ return [
     'available' => 'Available',
     'occupied' => 'Occupied',
     'maintenance' => 'Maintenance',
+    'full' => 'Full',
 
     // Bookings Page
     'bookings_management' => 'Bookings Management',
@@ -335,6 +338,10 @@ return [
     'thousand' => 'K',
     'million' => 'M',
     'billion' => 'B',
+    'filter' => 'Filter',
+    'optional' => 'Optional',
+    'all_types' => 'All Types',
+    'all_statuses' => 'All Statuses',
 
     // Notifications
     'notifications' => [

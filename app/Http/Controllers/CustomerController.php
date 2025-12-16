@@ -39,9 +39,25 @@ class CustomerController extends Controller
         return view('customer.dashboard', compact('myPets', 'myBookings', 'recentBookings'));
     }
 
-    public function rooms()
+    public function rooms(Request $request)
     {
-        $rooms = Room::where('status', 'available')->get();
+        $query = Room::query();
+
+        if ($request->filled('type')) {
+            $query->where('type', $request->type);
+        }
+
+        // Sorting: 'available' first, then by status order, then by code
+        $rooms = $query->get()->sortBy(function($room) {
+            switch ($room->status) {
+                case 'available': return 1;
+                case 'occupied': return 2;
+                case 'penuh': return 3;
+                case 'maintenance': return 4;
+                default: return 5;
+            }
+        });
+
         return view('customer.rooms', compact('rooms'));
     }
 
@@ -80,8 +96,6 @@ class CustomerController extends Controller
             'total_price' => $total,
         ]);
 
-        // Update room status
-        $room->update(['status' => 'occupied']);
 
         // Create invoice
         Invoice::create([

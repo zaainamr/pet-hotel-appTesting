@@ -6,13 +6,30 @@
                 <p class="text-gray-600 mt-1">{{ __('messages.choose_from_available') }}</p>
             </div>
 
+            <form action="{{ route('customer.rooms') }}" method="GET" class="mb-6 bg-white p-4 rounded-lg shadow-sm">
+                <div class="grid grid-cols-1 md:grid-cols-4 gap-4 items-end">
+                    <div>
+                        <label for="type" class="block text-sm font-medium text-gray-700">{{ __('messages.type') }}</label>
+                        <select name="type" id="type" class="mt-1 block w-full form-input rounded-md shadow-sm border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50">
+                            <option value="">{{ __('messages.all_types') }}</option>
+                            <option value="Standard" {{ request('type') == 'Standard' ? 'selected' : '' }}>{{ __('messages.standard') }}</option>
+                            <option value="Deluxe" {{ request('type') == 'Deluxe' ? 'selected' : '' }}>{{ __('messages.deluxe') }}</option>
+                            <option value="Suite" {{ request('type') == 'Suite' ? 'selected' : '' }}>{{ __('messages.suite') }}</option>
+                        </select>
+                    </div>
+                    <div>
+                        <button type="submit" class="btn-gradient w-full justify-center">{{ __('messages.filter') }}</button>
+                    </div>
+                </div>
+            </form>
+
             <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
                 @forelse($rooms as $room)
-                <div class="relative bg-white rounded-lg shadow-lg overflow-hidden transition @if($room->status !== 'available') bg-gray-200 @else hover:shadow-xl @endif">
+                <div class="relative bg-white rounded-lg shadow-lg overflow-hidden transition @if($room->status !== 'available') bg-gray-100 @else hover:shadow-xl @endif">
                     <div class="relative">
-                        <img src="{{ str_starts_with($room->image, 'images/rooms') ? asset('storage/' . $room->image) : asset('image/' . basename($room->image)) }}" alt="{{ $room->code }}" class="w-full object-cover aspect-[4/3] @if($room->status !== 'available') opacity-50 @endif">
+                        <img src="{{ str_starts_with($room->image, 'images/rooms') ? asset('storage/' . $room->image) : asset('image/' . basename($room->image)) }}" alt="{{ $room->code }}" class="w-full object-cover aspect-[4/3] @if($room->status !== 'available') opacity-60 @endif">
                         @if($room->status !== 'available')
-                            <div class="absolute top-2 right-2 bg-gray-800 bg-opacity-70 text-white text-xs font-bold px-3 py-1 rounded-full uppercase">
+                            <div class="absolute top-2 right-2 {{ $room->status == 'penuh' || $room->status == 'occupied' ? 'bg-red-600' : ($room->status == 'maintenance' ? 'bg-gray-600' : 'bg-yellow-600') }} bg-opacity-80 text-white text-xs font-bold px-3 py-1 rounded-full uppercase">
                                 {{ __('messages.' . $room->status) }}
                             </div>
                         @endif

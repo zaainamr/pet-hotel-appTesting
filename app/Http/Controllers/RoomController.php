@@ -8,9 +8,19 @@ use Illuminate\Support\Facades\Storage;
 
 class RoomController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
-        $rooms = Room::paginate(15);
+        $query = Room::query();
+
+        if ($request->filled('type')) {
+            $query->where('type', $request->type);
+        }
+
+        if ($request->filled('status')) {
+            $query->where('status', $request->status);
+        }
+
+        $rooms = $query->paginate(15);
         return view('rooms.index', compact('rooms'));
     }
 
@@ -25,7 +35,7 @@ class RoomController extends Controller
             'code' => 'required|string|unique:rooms,code',
             'type' => 'nullable|string',
             'capacity' => 'required|integer|min:1',
-            'rate_per_day' => 'required|numeric|min:0',
+            'rate_per_day' => 'required|numeric|min:10000',
             'notes' => 'nullable|string',
             'image' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
         ]);
@@ -48,6 +58,9 @@ class RoomController extends Controller
 
     public function edit(Room $room)
     {
+        if (in_array($room->status, ['occupied', 'penuh'])) {
+            return redirect()->route('rooms.index')->with('error', __('messages.room_edit_has_booking'));
+        }
         return view('rooms.edit', compact('room'));
     }
 
@@ -58,7 +71,7 @@ class RoomController extends Controller
             'type' => 'nullable|string',
             'capacity' => 'required|integer|min:1',
             'rate_per_day' => 'required|numeric|min:0',
-            'status' => 'required|in:available,occupied,maintenance',
+            'status' => 'required|in:available,occupied,maintenance,penuh',
             'notes' => 'nullable|string',
             'image' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
         ]);
@@ -77,6 +90,10 @@ class RoomController extends Controller
 
     public function destroy(Room $room)
     {
+        if (in_array($room->status, ['occupied', 'penuh'])) {
+            return redirect()->route('rooms.index')->with('error', __('messages.room_delete_has_booking'));
+        }
+
         $room->delete();
         return redirect()->route('rooms.index')->with('success', __('messages.room_deleted'));
     }

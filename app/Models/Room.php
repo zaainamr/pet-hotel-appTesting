@@ -15,4 +15,23 @@ class Room extends Model
     {
         return $this->hasMany(Booking::class);
     }
+
+    public function updateStatusBasedOnBookings()
+    {
+        if ($this->status === 'maintenance') {
+            return; // Don't change status if under maintenance
+        }
+
+        $confirmedBookingsCount = $this->bookings()->where('status', 'confirmed')->count();
+
+        if ($confirmedBookingsCount >= $this->capacity) {
+            $this->status = 'penuh';
+        } elseif ($confirmedBookingsCount > 0) {
+            $this->status = 'occupied';
+        } else {
+            $this->status = 'available';
+        }
+
+        $this->save();
+    }
 }

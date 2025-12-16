@@ -22,6 +22,37 @@
                 <div class="mb-4 bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded"><span>{{ session('success') }}</span></div>
             @endif
 
+            @if(session('error'))
+                <div class="mb-4 bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded"><span>{{ session('error') }}</span></div>
+            @endif
+
+            <form action="{{ route('rooms.index') }}" method="GET" class="mb-6 bg-gray-50 p-4 rounded-lg">
+                <div class="grid grid-cols-1 md:grid-cols-4 gap-4 items-end">
+                    <div>
+                        <label for="type" class="block text-sm font-medium text-gray-700">{{ __('messages.type') }}</label>
+                        <select name="type" id="type" class="mt-1 block w-full form-input rounded-md shadow-sm">
+                            <option value="">{{ __('messages.all_types') }}</option>
+                            <option value="Standard" {{ request('type') == 'Standard' ? 'selected' : '' }}>{{ __('messages.standard') }}</option>
+                            <option value="Deluxe" {{ request('type') == 'Deluxe' ? 'selected' : '' }}>{{ __('messages.deluxe') }}</option>
+                            <option value="Suite" {{ request('type') == 'Suite' ? 'selected' : '' }}>{{ __('messages.suite') }}</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label for="status" class="block text-sm font-medium text-gray-700">{{ __('messages.status') }}</label>
+                        <select name="status" id="status" class="mt-1 block w-full form-input rounded-md shadow-sm">
+                            <option value="">{{ __('messages.all_statuses') }}</option>
+                            <option value="available" {{ request('status') == 'available' ? 'selected' : '' }}>{{ __('messages.available') }}</option>
+                            <option value="occupied" {{ request('status') == 'occupied' ? 'selected' : '' }}>{{ __('messages.occupied') }}</option>
+                            <option value="penuh" {{ request('status') == 'penuh' ? 'selected' : '' }}>{{ __('messages.penuh') }}</option>
+                            <option value="maintenance" {{ request('status') == 'maintenance' ? 'selected' : '' }}>{{ __('messages.maintenance') }}</option>
+                        </select>
+                    </div>
+                    <div>
+                        <button type="submit" class="btn-gradient w-full justify-center">{{ __('messages.filter') }}</button>
+                    </div>
+                </div>
+            </form>
+
             <div class="overflow-x-auto bg-white rounded-lg shadow overflow-y-auto relative">
                 <table class="border-collapse table-auto w-full whitespace-no-wrap bg-white table-striped relative">
                     <thead>
@@ -44,7 +75,7 @@
                                 <td class="border-dashed border-t border-gray-200 px-6 py-3"><span class="text-gray-700">Rp {{ number_format($room->rate_per_day, 0, ',', '.') }}</span></td>
                                 <td class="border-dashed border-t border-gray-200 px-6 py-3"><span class="text-gray-700">{{ $room->capacity }}</span></td>
                                 <td class="border-dashed border-t border-gray-200 px-6 py-3">
-                                    <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full {{ $room->status == 'available' ? 'bg-green-100 text-green-800' : ($room->status == 'occupied' ? 'bg-red-100 text-red-800' : 'bg-yellow-100 text-yellow-800') }}">
+                                    <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full {{ $room->status == 'available' ? 'bg-green-100 text-green-800' : ($room->status == 'occupied' || $room->status == 'penuh' ? 'bg-red-100 text-red-800' : 'bg-yellow-100 text-yellow-800') }}">
                                         {{ ucfirst(__("messages.$room->status")) }}
                                     </span>
                                 </td>

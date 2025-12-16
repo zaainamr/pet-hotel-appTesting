@@ -52,8 +52,7 @@ class BookingController extends Controller
         $total = 0;
         if ($booking->room) {
             $total += $booking->room->rate_per_day * $days;
-            // mark room as reserved temporarily
-            $booking->room->update(['status' => 'occupied']);
+            $booking->room->updateStatusBasedOnBookings();
         }
 
         $booking->update(['total_price' => $total]);
@@ -115,6 +114,10 @@ class BookingController extends Controller
             $booking->invoice->update(['amount' => $total]);
         }
 
+        if ($booking->room) {
+            $booking->room->updateStatusBasedOnBookings();
+        }
+
         // Notify customer about booking status change
         $customerUser = \App\Models\User::where('email', $booking->pet->owner->email)->first();
         if ($customerUser) {
@@ -154,6 +157,10 @@ class BookingController extends Controller
 
         $booking->update(['status' => $request->status]);
 
+        if ($booking->room) {
+            $booking->room->updateStatusBasedOnBookings();
+        }
+
         // Optional: Add notifications or other logic here as needed
 
         return back()->with('success', __('messages.booking_status_updated'));
@@ -161,12 +168,14 @@ class BookingController extends Controller
 
     public function destroy(Booking $booking)
     {
-        // Free up room if assigned
-        if ($booking->room) {
-            $booking->room->update(['status' => 'available']);
+        $room = $booking->room; // Get the room before deleting the booking
+
+        $booking->delete();
+
+        if ($room) {
+            $room->updateStatusBasedOnBookings();
         }
         
-        $booking->delete();
         return redirect()->route('bookings.index')->with('success', __('messages.booking_deleted'));
     }
 }

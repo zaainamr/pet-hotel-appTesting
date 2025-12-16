@@ -71,6 +71,8 @@ return [
     'room_created' => 'Kamar berhasil dibuat!',
     'room_updated' => 'Kamar berhasil diperbarui!',
     'room_deleted' => 'Kamar berhasil dihapus!',
+    'room_delete_has_booking' => 'Tidak dapat menghapus kamar yang sedang terisi atau penuh.',
+    'room_edit_has_booking' => 'Tidak dapat mengubah kamar yang sedang terisi atau penuh.',
     'service_created' => 'Layanan berhasil dibuat!',
 
     // Admin Dashboard
@@ -170,6 +172,7 @@ return [
     'available' => 'Tersedia',
     'occupied' => 'Terisi',
     'maintenance' => 'Dalam Perbaikan',
+    'penuh' => 'Penuh',
 
     // Bookings Page
     'bookings_management' => 'Manajemen Pemesanan',
@@ -334,6 +337,10 @@ return [
     'thousand' => 'Ribu',
     'million' => 'Juta',
     'billion' => 'Miliar',
+    'filter' => 'Saring',
+    'optional' => 'Opsional',
+    'all_types' => 'Semua Tipe',
+    'all_statuses' => 'Semua Status',
 
     // Notifications
     'notifications' => [

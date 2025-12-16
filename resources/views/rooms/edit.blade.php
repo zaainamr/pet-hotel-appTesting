@@ -42,7 +42,7 @@
                         </select>
                     </div>
                     <div class="md:col-span-2">
-                        <label for="image" class="block text-sm font-medium text-gray-700 mb-2">{{ __('messages.room_image') }}</label>
+                        <label for="image" class="block text-sm font-medium text-gray-700 mb-2">{{ __('messages.room_image') }} ({{ __('messages.optional') }})</label>
                         <input type="file" name="image" id="image" class="form-input w-full @error('image') border-red-500 @enderror">
                         @error('image')<p class="mt-1 text-sm text-red-600">{{ $message }}</p>@enderror
                         @if($room->image)
@@ -50,7 +50,7 @@
                         @endif
                     </div>
                     <div class="md:col-span-2">
-                        <label for="notes" class="block text-sm font-medium text-gray-700 mb-2">{{ __('messages.notes') }}</label>
+                        <label for="notes" class="block text-sm font-medium text-gray-700 mb-2">{{ __('messages.notes') }} ({{ __('messages.optional') }})</label>
                         <textarea name="notes" id="notes" rows="3" class="form-input w-full">{{ old('notes', $room->notes) }}</textarea>
                     </div>
                 </div>

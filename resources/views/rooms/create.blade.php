@@ -31,15 +31,15 @@
                     </div>
                     <div>
                         <label for="rate_per_day" class="block text-sm font-medium text-gray-700 mb-2">{{ __('messages.rate_per_day') }} (Rp) *</label>
-                        <input type="number" name="rate_per_day" id="rate_per_day" value="{{ old('rate_per_day') }}" min="0" step="0.01" required class="form-input w-full">
+                        <input type="number" name="rate_per_day" id="rate_per_day" value="{{ old('rate_per_day') }}" min="10000" step="1000" required class="form-input w-full">
                     </div>
                     <div class="md:col-span-2">
-                        <label for="image" class="block text-sm font-medium text-gray-700 mb-2">{{ __('messages.room_image') }}</label>
+                        <label for="image" class="block text-sm font-medium text-gray-700 mb-2">{{ __('messages.room_image') }} ({{ __('messages.optional') }})</label>
                         <input type="file" name="image" id="image" class="form-input w-full @error('image') border-red-500 @enderror">
                         @error('image')<p class="mt-1 text-sm text-red-600">{{ $message }}</p>@enderror
                     </div>
                     <div class="md:col-span-2">
-                        <label for="notes" class="block text-sm font-medium text-gray-700 mb-2">{{ __('messages.notes') }}</label>
+                        <label for="notes" class="block text-sm font-medium text-gray-700 mb-2">{{ __('messages.notes') }} ({{ __('messages.optional') }})</label>
                         <textarea name="notes" id="notes" rows="3" class="form-input w-full">{{ old('notes') }}</textarea>
                     </div>
                 </div>
