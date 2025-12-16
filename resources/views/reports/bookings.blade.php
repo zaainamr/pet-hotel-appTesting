@@ -43,7 +43,7 @@
                                     <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">{{ $booking->pet->name }}</td>
                                     <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{{ $booking->pet->owner->name }}</td>
                                     <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{{ $booking->room->code }}</td>
-                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{{ $booking->start_date }}</td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{{ \Carbon\Carbon::parse($booking->start_date)->translatedFormat('l, d F Y') }}</td>
                                     <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{{ __('messages.' . $booking->status) }}</td>
                                 </tr>
                             @endforeach

@@ -14,7 +14,7 @@
                     <div>
                         <h2 class="text-2xl font-bold text-gray-900">{{ strtoupper(__('messages.invoice')) }}</h2>
                         <p class="text-gray-600 mt-2">{{ __('messages.invoice_no') }}{{ $invoice->id }}</p>
-                        <p class="text-gray-600">{{ __('messages.date') }}: {{ $invoice->created_at->format('d F Y') }}</p>
+                        <p class="text-gray-600">{{ __('messages.date') }}: {{ $invoice->created_at->translatedFormat('l, d F Y') }}</p>
                     </div>
                     <div class="text-right">
                         <h3 class="text-xl font-bold text-primary">Pet Hotel</h3>
@@ -45,7 +45,7 @@
                                 <tr class="border-b">
                                     <td class="px-4 py-3">
                                         <p class="font-medium">{{ __('messages.pet_boarding') }} - {{ $invoice->booking->pet->name }}</p>
-                                        <p class="text-sm text-gray-600">{{ $invoice->booking->start_date }} to {{ $invoice->booking->end_date }}</p>
+                                        <p class="text-sm text-gray-600">{{ \Carbon\Carbon::parse($invoice->booking->start_date)->translatedFormat('l, d F Y') }} to {{ \Carbon\Carbon::parse($invoice->booking->end_date)->translatedFormat('l, d F Y') }}</p>
                                         @if($invoice->booking->room)
                                             <p class="text-sm text-gray-600">{{ __('messages.room') }}: {{ $invoice->booking->room->code }} ({{ $invoice->booking->room->type ?? __('messages.standard') }})</p>
                                         @endif
@@ -73,7 +73,7 @@
                         @if($invoice->paid && $invoice->paid_at)
                             <div class="flex justify-between items-center mt-2">
                                 <span class="text-sm text-gray-600">{{ __('messages.paid_on') }}</span>
-                                <span class="text-sm">{{ $invoice->paid_at->format('d M Y H:i') }}</span>
+                                <span class="text-sm">{{ $invoice->paid_at->translatedFormat('l, d F Y, H:i') }}</span>
                             </div>
                         @endif
                     </div>

@@ -6,8 +6,8 @@
     <div class="mb-2">Pet: {{ $booking->pet->name ?? '-' }}</div>
     <div class="mb-2">Owner: {{ $booking->owner->name ?? '-' }}</div>
     <div class="mb-2">Room: {{ $booking->room->code ?? '-' }}</div>
-    <div class="mb-2">Start: {{ $booking->start_date }}</div>
-    <div class="mb-2">End: {{ $booking->end_date }}</div>
+    <div class="mb-2">Start: {{ \Carbon\Carbon::parse($booking->start_date)->translatedFormat('l, d F Y') }}</div>
+    <div class="mb-2">End: {{ \Carbon\Carbon::parse($booking->end_date)->translatedFormat('l, d F Y') }}</div>
     <div class="mb-2">Status: {{ $booking->status }}</div>
 
     @if($booking->invoice)

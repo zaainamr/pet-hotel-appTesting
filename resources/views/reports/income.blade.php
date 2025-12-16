@@ -49,7 +49,7 @@
                                                     {{ $invoice->paid ? 'Paid' : 'Unpaid' }}
                                                 </span>
                                             </td>
-                                            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{{ $invoice->created_at->format('d M Y') }}</td>
+                                            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{{ $invoice->created_at->translatedFormat('l, d F Y') }}</td>
                                         </tr>
                                     @endforeach
                                 </tbody>

@@ -31,7 +31,7 @@
                                     </div>
                                     <div>
                                         <p class="font-medium text-gray-700">{{ __('messages.dates') }}</p>
-                                        <p>{{ $booking->start_date }} to {{ $booking->end_date }}</p>
+                                        <p>{{ \Carbon\Carbon::parse($booking->start_date)->translatedFormat('l, d F Y') }} to {{ \Carbon\Carbon::parse($booking->end_date)->translatedFormat('l, d F Y') }}</p>
                                     </div>
                                     <div>
                                         <p class="font-medium text-gray-700">{{ __('messages.total_price') }}</p>
