@@ -1,0 +1,286 @@
+Scenario ID,Case ID,Test Scenario,Type,Test Case,Pre Condition,Steps,Steps Description,Expected Result,Status (Pass/Fail)
+TS-01,TC-001,Melihat Daftar Invoice,Positive,Customer Memiliki Invoice (1-10 invoice),"1. User sudah login sebagai customer
+2. Customer memiliki owner_id yang valid
+3. Terdapat 5 invoice terkait dengan booking customer","1
+2
+3","1. Login sebagai customer
+2. Navigasi ke menu My Invoices atau akses /customer/invoices
+3. Verifikasi tampilan halaman","1. Halaman My Invoices ditampilkan
+2. Terlihat 5 invoice dalam bentuk list
+3. Setiap invoice menampilkan: Invoice No, Status Badge (Paid/Unpaid), Pet Name, Room Code, Tanggal Booking, Amount
+4. Tombol View Details tersedia pada setiap invoice",[ ] Pass / [ ] Fail
+TS-01,TC-002,Melihat Daftar Invoice,Positive,Customer Memiliki Banyak Invoice (>10),"1. User sudah login sebagai customer
+2. Customer memiliki 25 invoice dalam database","1
+2
+3
+4","1. Login sebagai customer
+2. Akses /customer/invoices
+3. Periksa jumlah invoice yang ditampilkan
+4. Periksa pagination","1. Menampilkan 10 invoice per halaman
+2. Pagination menunjukkan 3 halaman (25 ÷ 10)
+3. Navigasi antar halaman berfungsi
+4. Data invoice urut dari terbaru",[ ] Pass / [ ] Fail
+TS-01,TC-003,Melihat Daftar Invoice,Boundary,Customer Tidak Memiliki Invoice,"1. User sudah login sebagai customer
+2. Customer belum pernah membuat booking/invoice
+3. Database invoice kosong untuk customer ini","1
+2
+3","1. Login sebagai customer baru
+2. Akses /customer/invoices
+3. Periksa tampilan empty state","1. Halaman ditampilkan dengan empty state
+2. Muncul icon dokumen abu-abu
+3. Pesan No invoices yet ditampilkan
+4. Tidak ada error",[ ] Pass / [ ] Fail
+TS-02,TC-004,Status Pembayaran Invoice,Positive,Invoice dengan Status Paid,"1. Customer memiliki invoice dengan paid = true
+2. paid_at timestamp tersedia
+3. User sudah login","1
+2
+3","1. Login sebagai customer
+2. Akses /customer/invoices
+3. Periksa invoice yang sudah paid","1. Badge hijau dengan text Paid ditampilkan
+2. Tanggal pembayaran ditampilkan (format: 01 Jan 2025, 14:30)
+3. Checkmark icon berwarna hijau muncul",[ ] Pass / [ ] Fail
+TS-02,TC-005,Status Pembayaran Invoice,Positive,Invoice dengan Status Unpaid,"1. Customer memiliki invoice dengan paid = false
+2. paid_at = null
+3. User sudah login","1
+2
+3","1. Login sebagai customer
+2. Akses /customer/invoices
+3. Periksa invoice yang belum paid","1. Badge kuning dengan text Unpaid ditampilkan
+2. Tidak ada tanggal pembayaran
+3. Warning icon berwarna kuning muncul saat lihat detail",[ ] Pass / [ ] Fail
+TS-03,TC-006,Relasi Data Invoice,Positive,Invoice dengan Data Booking Lengkap,"1. Invoice memiliki relasi booking yang valid
+2. Booking memiliki pet, room, dan owner yang valid
+3. User sudah login","1
+2
+3","1. Login sebagai customer
+2. Akses /customer/invoices
+3. Periksa detail invoice","1. Pet name ditampilkan
+2. Room code ditampilkan
+3. Tanggal check-in dan check-out ditampilkan
+4. Amount total ditampilkan dengan format Rp xxx.xxx",[ ] Pass / [ ] Fail
+TS-03,TC-007,Relasi Data Invoice,Negative,Invoice dengan Booking yang Dihapus,"1. Invoice ada tapi booking_id nya merujuk ke data yang sudah dihapus
+2. User sudah login","1
+2
+3
+4","1. Buat invoice dengan booking valid
+2. Hapus booking (soft delete atau hard delete)
+3. Login sebagai customer
+4. Akses /customer/invoices","1. Sistem menampilkan error handling yang baik
+2. Atau menampilkan N/A untuk data yang hilang
+3. Tidak terjadi crash/error 500",[ ] Pass / [ ] Fail
+TS-04,TC-008,Authentication & Authorization,Positive,Customer Melihat Invoice Milik Sendiri,"1. User A login sebagai customer
+2. Invoice terkait dengan owner_id User A
+3. Database memiliki invoice milik User A","1
+2
+3
+4","1. Login sebagai User A
+2. Akses /customer/invoices
+3. Pilih salah satu invoice
+4. Klik View Details","1. Invoice detail ditampilkan dengan benar
+2. Semua informasi sesuai dengan data invoice User A
+3. Status code 200 OK",[ ] Pass / [ ] Fail
+TS-04,TC-009,Authentication & Authorization,Negative,Customer Akses Invoice User Lain (Unauthorized),"1. User A login sebagai customer
+2. Terdapat invoice milik User B (id = 5)
+3. User A tahu URL invoice User B","1
+2
+3","1. Login sebagai User A
+2. Akses langsung URL /customer/invoices/5 (invoice milik User B)
+3. Periksa response","1. Error 403 Forbidden muncul
+2. Pesan Unauthorized action. ditampilkan
+3. User tidak dapat melihat data invoice orang lain",[ ] Pass / [ ] Fail
+TS-04,TC-010,Authentication & Authorization,Negative,Guest (Belum Login) Akses Invoice,"1. User belum login (no session)
+2. Browser dalam mode incognito atau sudah logout","1
+2
+3","1. Logout atau gunakan incognito mode
+2. Akses URL /customer/invoices
+3. Periksa redirect","1. Redirect ke halaman login /login
+2. Flash message meminta untuk login terlebih dahulu
+3. Session redirect benar",[ ] Pass / [ ] Fail
+TS-05,TC-011,Format Amount,Positive,Amount Normal (Rp 100.000 - 10.000.000),"1. Invoice memiliki amount = 500000
+2. User sudah login
+3. Invoice dapat diakses","1
+2
+3","1. Login sebagai customer
+2. Akses invoice dengan amount 500000
+3. Periksa format tampilan","1. Amount ditampilkan sebagai Rp 500.000
+2. Separator ribuan menggunakan titik (.)
+3. Tidak ada desimal",[ ] Pass / [ ] Fail
+TS-05,TC-012,Format Amount,Boundary,Amount Sangat Kecil,"1. Invoice memiliki amount = 1
+2. User sudah login","1
+2
+3","1. Buat invoice dengan amount = 1
+2. Login dan lihat invoice tersebut
+3. Periksa tampilan amount","1. Amount ditampilkan sebagai Rp 1
+2. Tidak ada error
+3. Format tetap konsisten",[ ] Pass / [ ] Fail
+TS-05,TC-013,Format Amount,Boundary,Amount Sangat Besar,"1. Invoice memiliki amount = 999999999
+2. User sudah login","1
+2
+3","1. Buat invoice dengan amount = 999999999
+2. Login dan lihat invoice tersebut
+3. Periksa tampilan","1. Amount ditampilkan sebagai Rp 999.999.999
+2. Format tetap benar dengan separator
+3. Tidak overflow atau terpotong",[ ] Pass / [ ] Fail
+TS-05,TC-014,Format Amount,Negative,Amount Negatif (Invalid),"1. Database manipulation atau API test
+2. Attempt insert amount negatif","1
+2
+3","1. Manipulasi database atau API untuk insert amount = -50000
+2. Coba akses invoice tersebut
+3. Periksa response","1. Sistem validation mencegah penyimpanan amount negatif
+2. Atau menampilkan error handling yang baik
+3. Tidak crash",[ ] Pass / [ ] Fail
+TS-05,TC-015,Format Amount,Negative,Amount NULL,"1. Invoice dengan amount = null di database
+2. Data manipulation","1
+2
+3","1. Manipulasi data untuk set amount = null
+2. Akses invoice tersebut
+3. Periksa error handling","1. Sistem menampilkan Rp 0 atau pesan error
+2. Tidak terjadi crash
+3. User friendly error message",[ ] Pass / [ ] Fail
+TS-06,TC-016,Durasi Booking,Positive,Durasi 1 Hari,"1. Booking dengan start_date = 2025-12-18, end_date = 2025-12-18
+2. Invoice terkait booking tersebut
+3. User sudah login","1
+2
+3
+4","1. Login sebagai customer
+2. Buka detail invoice untuk booking tersebut
+3. Periksa field durasi
+4. Verifikasi perhitungan","1. Durasi ditampilkan sebagai 1 days atau 1 hari
+2. Perhitungan: (end_date - start_date) + 1 = 1
+3. Sesuai dengan logika bisnis",[ ] Pass / [ ] Fail
+TS-06,TC-017,Durasi Booking,Positive,Durasi Beberapa Hari (2-30 hari),"1. Booking dengan start_date = 2025-12-18, end_date = 2025-12-23
+2. Invoice tersedia
+3. User sudah login","1
+2
+3
+4","1. Login sebagai customer
+2. Buka detail invoice
+3. Periksa durasi
+4. Verifikasi kalkulasi","1. Durasi ditampilkan sebagai 6 days
+2. Perhitungan benar: 18-23 Des = 6 hari
+3. Amount sesuai dengan durasi × rate_per_day",[ ] Pass / [ ] Fail
+TS-06,TC-018,Durasi Booking,Positive,Durasi Lama (>30 hari),"1. Booking dengan start_date = 2025-12-01, end_date = 2026-01-15
+2. Invoice tersedia
+3. User sudah login","1
+2
+3
+4","1. Buat booking dengan durasi panjang
+2. Lihat detail invoice
+3. Periksa perhitungan durasi
+4. Verifikasi amount","1. Durasi ditampilkan sebagai 46 days
+2. Perhitungan akurat meskipun melewati bulan berbeda
+3. Total amount = 46 × rate_per_day",[ ] Pass / [ ] Fail
+TS-07,TC-019,Pagination,Positive,Halaman Pertama,"1. Customer memiliki 25 invoice
+2. User sudah login
+3. Pagination diset 10 per page","1
+2
+3
+4","1. Login sebagai customer
+2. Akses /customer/invoices (default page 1)
+3. Periksa data yang ditampilkan
+4. Periksa link pagination","1. Menampilkan invoice 1-10 (terbaru)
+2. Link Next atau 2 tersedia
+3. Link Previous tidak aktif/hilang
+4. Page indicator menunjukkan 1",[ ] Pass / [ ] Fail
+TS-07,TC-020,Pagination,Positive,Halaman Tengah,"1. Customer memiliki 25 invoice
+2. User sudah login","1
+2
+3
+4","1. Login sebagai customer
+2. Akses /customer/invoices?page=2
+3. Periksa invoice yang ditampilkan
+4. Periksa navigation links","1. Menampilkan invoice 11-20
+2. Link Previous dan Next keduanya tersedia
+3. Page indicator menunjukkan 2
+4. Data urut dengan benar",[ ] Pass / [ ] Fail
+TS-07,TC-021,Pagination,Positive,Halaman Terakhir,"1. Customer memiliki 25 invoice
+2. User sudah login","1
+2
+3
+4","1. Login sebagai customer
+2. Akses /customer/invoices?page=3
+3. Periksa data
+4. Periksa link navigation","1. Menampilkan invoice 21-25 (5 invoice)
+2. Link Next tidak aktif/hilang
+3. Link Previous tersedia
+4. Page indicator menunjukkan 3",[ ] Pass / [ ] Fail
+TS-07,TC-022,Pagination,Negative,Halaman Tidak Valid,"1. Customer memiliki 25 invoice (hanya 3 halaman)
+2. User sudah login","1
+2
+3","1. Login sebagai customer
+2. Akses /customer/invoices?page=999
+3. Periksa response","1. Menampilkan halaman kosong atau
+2. Redirect ke halaman terakhir yang valid (page 3)
+3. Tidak error 500",[ ] Pass / [ ] Fail
+TS-07,TC-023,Pagination,Negative,Halaman Negatif,"1. Customer memiliki minimal 1 invoice
+2. User sudah login","1
+2
+3","1. Login sebagai customer
+2. Akses /customer/invoices?page=-1
+3. Periksa behavior","1. Redirect ke page 1
+2. Atau menampilkan halaman pertama
+3. Tidak terjadi error",[ ] Pass / [ ] Fail
+TS-08,TC-024,Detail Invoice,Positive,Melihat Detail Invoice Lengkap,"1. Customer login
+2. Invoice memiliki semua relasi data lengkap
+3. Invoice dapat diakses oleh customer","1
+2
+3
+4
+5","1. Login sebagai customer
+2. Akses /customer/invoices
+3. Klik View Details pada salah satu invoice
+4. Periksa semua field detail
+5. Verifikasi data accuracy","1. Halaman detail invoice ditampilkan
+2. Header: Invoice No, Tanggal, Status Badge
+3. Booking Details: Pet Name, Species, Room Code, Room Type, Check-in, Check-out, Duration, Rate
+4. Amount: Total Amount format Rupiah
+5. Payment Status: Payment Received atau Payment Pending
+6. Tombol Back to Invoices berfungsi",[ ] Pass / [ ] Fail
+TS-08,TC-025,Detail Invoice,Positive,Tombol View Details Berfungsi,"1. Customer login dan memiliki invoice
+2. Berada di halaman list invoice","1
+2
+3
+4","1. Login sebagai customer
+2. Di halaman /customer/invoices, klik tombol View Details
+3. Periksa URL dan konten halaman
+4. Verifikasi data yang ditampilkan","1. Redirect ke /customer/invoices/{invoice_id}
+2. Detail invoice sesuai dengan ID yang dipilih
+3. Tidak ada error
+4. Loading smooth tanpa delay berlebihan",[ ] Pass / [ ] Fail
+TS-09,TC-026,Format Tanggal,Positive,Format Tanggal sesuai Locale,"1. Invoice memiliki created_at dan paid_at timestamp
+2. Locale aplikasi diset (Indonesia/English)
+3. User sudah login","1
+2
+3
+4","1. Login sebagai customer
+2. Buka detail invoice
+3. Periksa format tanggal
+4. Periksa konsistensi format","1. Tanggal ditampilkan: Senin, 18 Desember 2025 (locale ID)
+2. Atau Monday, 18 December 2025 (locale EN)
+3. Jam format 24 jam 14:30
+4. Konsisten di semua halaman",[ ] Pass / [ ] Fail
+TS-10,TC-027,Navigation,Positive,Tombol Back to Invoices,"1. User berada di halaman detail invoice
+2. Sudah login sebagai customer","1
+2
+3
+4","1. Login sebagai customer
+2. Buka detail invoice
+3. Klik tombol Back to Invoices
+4. Verifikasi redirect","1. Redirect kembali ke /customer/invoices
+2. Tidak ada data loss
+3. Posisi pagination tetap diingat (opsional)
+4. Smooth navigation",[ ] Pass / [ ] Fail
+TS-11,TC-028,UI/UX,Positive,Responsive Design - Mobile View,"1. Customer login dan memiliki invoice
+2. Browser support responsive design","1
+2
+3
+4
+5","1. Login sebagai customer
+2. Akses halaman invoice melalui mobile browser atau resize ke 375px
+3. Periksa tampilan
+4. Test navigasi
+5. Test semua interaksi","1. Layout responsive dan tidak overlap
+2. Grid berubah dari 4 kolom ke 1 kolom
+3. Tombol dan teks masih terbaca
+4. Scroll berfungsi dengan baik
+5. Touch interaction bekerja",[ ] Pass / [ ] Fail
